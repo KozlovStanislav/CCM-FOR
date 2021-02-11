@@ -4,8 +4,8 @@
 
 addpath('source');
 
-PATH_TO_4D_NII = 'D:\Lab\Rest\Data\Fedorova_A_A\filtered_func_data_smooth.nii';
-PATH_TO_MASK = 'D:\result_full_mask.nii';
+PATH_TO_4D_NII = 'path\to\4d\data.nii';
+PATH_TO_MASK = 'path\to\mask.nii';
 
 [all_data, map] = LoadData(PATH_TO_4D_NII, PATH_TO_MASK);
 
