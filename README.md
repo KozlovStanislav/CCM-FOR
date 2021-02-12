@@ -9,6 +9,8 @@
 
 Находится в папке main/FSM, основной скрипт: GetCorrelationRegions.m
 
+Полное описание работы метода см. в статье "Kozlov, Stanislav & Poyda, Alexey & Orlov, Vyacheslav & Malakhov, Denis & Ushakov, Vadim & Sharaev, Maxim. (2020). Selection of functionally homogeneous brain regions based on correlation-clustering analysis. Procedia Computer Science. 169. 519-526. 10.1016/j.procs.2020.02.215.", раздел 2 "Methods" подраздел "Correlation approach" 
+
 Запускается через MATLAB
 
 ### Входные данные:
@@ -35,6 +37,8 @@
 ## Метод кластеризационной сегментации
 
 Находится в папке main/CSM, основной скрипт: GetStabilityRegions.m
+
+Полное описание работы метода см. в статье "Kozlov, Stanislav & Poyda, Alexey & Orlov, Vyacheslav & Malakhov, Denis & Ushakov, Vadim & Sharaev, Maxim. (2020). Selection of functionally homogeneous brain regions based on correlation-clustering analysis. Procedia Computer Science. 169. 519-526. 10.1016/j.procs.2020.02.215.", раздел 2 "Methods" подраздел "Clustering approach" 
 
 Запускается через MATLAB
 
