@@ -9,6 +9,8 @@
 
 Находится в папке main/FSM, основной скрипт: GetCorrelationRegions.m
 
+Полное описание работы метода см. в статье "Kozlov, Stanislav & Poyda, Alexey & Orlov, Vyacheslav & Malakhov, Denis & Ushakov, Vadim & Sharaev, Maxim. (2020). Selection of functionally homogeneous brain regions based on correlation-clustering analysis. Procedia Computer Science. 169. 519-526. 10.1016/j.procs.2020.02.215.", раздел 2 "Methods" подраздел "Correlation approach" 
+
 Запускается через MATLAB
 
 ### Входные данные:
@@ -24,8 +26,8 @@
 
 ### Как запускать:
    1. В папке FSM открыть скрипт GetCorrelationRegions.m, задать пути к входным данным (PATH_TO_4D_DATA, PATH_TO_MASK), и параметры метода. Мы советуем следующие параметры:
-      CORR_CUTOFF - от 0.7 до 0.85
-      MIN_REG_SIZE - 10 (вокселей)
+      * CORR_CUTOFF - от 0.7 до 0.85
+      * MIN_REG_SIZE - 10 (вокселей)
    2. Закомментировать (если не нужно) удаление автокорреляции
    3. Добавить папку 'source' в path. Также внутри папки 'source' лежит папка с библиотекой NIfTI, которую также стоит добавить в path для работы с .nii файлами
    4. Запустить скрипт
@@ -35,6 +37,8 @@
 ## Метод кластеризационной сегментации
 
 Находится в папке main/CSM, основной скрипт: GetStabilityRegions.m
+
+Полное описание работы метода см. в статье "Kozlov, Stanislav & Poyda, Alexey & Orlov, Vyacheslav & Malakhov, Denis & Ushakov, Vadim & Sharaev, Maxim. (2020). Selection of functionally homogeneous brain regions based on correlation-clustering analysis. Procedia Computer Science. 169. 519-526. 10.1016/j.procs.2020.02.215.", раздел 2 "Methods" подраздел "Clustering approach" 
 
 Запускается через MATLAB
 
@@ -53,10 +57,10 @@
 
 ### Как запускать:
    1. В папке CSM открыть скрипт GetStabilityRegions.m, задать пути к входным данным (PATH_TO_4D_DATA, PATH_TO_MAP), и параметры метода. Мы советуем следующие параметры:
-      WINDOW - от 100 до 300 временных отчётов (у нас были данные: 1 отчёт = 2 секундам, всего 1000 временных отчётов);
-      STEP - мы рассматриваем шаг размером 50 % от размера окна (половинное перекрытие);
-      NOT_IN_REG_COUNT - от 0 до 0.3
-      MIN_REG_SIZE - 10 (вокселей)
+      * WINDOW - от 100 до 300 временных отчётов (у нас были данные: 1 отчёт = 2 секундам, всего 1000 временных отчётов);
+      * STEP - мы рассматриваем шаг размером 50 % от размера окна (половинное перекрытие);
+      * NOT_IN_REG_COUNT - от 0 до 0.3
+      * MIN_REG_SIZE - 10 (вокселей)
    2. Закомментировать (если не нужно) удаление автокорреляции. Стоит заметить, что текущая функция удаления автокорреляции уменьшает временной ряд на 2 точки. Это стоит учесть в параметре WINDOW
    3. Добавить папку 'source' в path. Также внутри папки 'source' лежит папка с библиотекой NIfTI, которую также стоит добавить в path для работы с .nii файлами
    4. Запустить скрипт
