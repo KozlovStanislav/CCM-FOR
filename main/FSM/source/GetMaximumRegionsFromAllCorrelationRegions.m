@@ -30,9 +30,9 @@ function new_map = GetMaximumRegionsFromAllCorrelationRegions(all_data, allRegio
         end
         for j=1:size(allRegions{i},2)
             if (new_map(allRegions{i}(j)) ~= 0)
-                tmp_data_vox = detrend(double(all_data{allRegions{i}(j)}));
-                tmp_data_cent1 = detrend(double(all_data{allRegions{i}(1)}));
-                tmp_data_cent2 = detrend(double(all_data{all_voxels(find(N == new_map(allRegions{i}(j)),1))}));  
+                tmp_data_vox = detrend(all_data{allRegions{i}(j)});
+                tmp_data_cent1 = detrend(all_data{allRegions{i}(1)});
+                tmp_data_cent2 = detrend(all_data{all_voxels(find(N == new_map(allRegions{i}(j)),1))});  
                 C1 = corr(tmp_data_vox,tmp_data_cent1);
                 C2 = corr(tmp_data_vox,tmp_data_cent2);
                 if C2>C1, continue; end;

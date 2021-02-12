@@ -11,7 +11,7 @@ function result = GetCorrelationRegionsForAllVoxels(data, mask, CORR_BR)
         clear voxels_analyzed
         voxels_analyzed(1) = all_voxels(i);
         [x,y,z] = ind2sub(size(mask), all_voxels(i));
-        main_dynamic = detrend(double(data{x,y,z}(:)));
+        main_dynamic = detrend(data{x,y,z}(:));
         result{i}(end+1) = all_voxels(i);
         if (mask(x+1,y,z)) 
             voxels_to_analyze(end+1,:) = [x+1 y z];
@@ -37,7 +37,7 @@ function result = GetCorrelationRegionsForAllVoxels(data, mask, CORR_BR)
             if any(voxels_analyzed == sub2ind(size(data), xt, yt, zt)), continue; end;
             voxels_analyzed(end+1) = sub2ind(size(data), xt, yt, zt);
             if (mask(xt,yt,zt)==0), continue; end;
-            tmp_dynamic = detrend(double(data{xt,yt,zt}(:)));
+            tmp_dynamic = detrend(data{xt,yt,zt}(:));
             C = corr(main_dynamic(:), tmp_dynamic(:));
             if (C > CORR_BR)
                 result{i}(end+1) =  voxels_analyzed(end);
