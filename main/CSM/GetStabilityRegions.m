@@ -1,27 +1,25 @@
-%%% StabilityRegions
+%%% GetStabilityRegions
 %% Load_data
 % disp('Loading data and parameters...');
 
-addpath('source');
+PATH_TO_4D_DATA = 'path\to\4d\data.nii';
+PATH_TO_MAP = 'path\to\mask.nii';
 
-PATH_TO_4D_NII = 'path\to\4d\data.nii';
-PATH_TO_MASK = 'path\to\mask.nii';
-
-[all_data, map] = LoadData(PATH_TO_4D_NII, PATH_TO_MASK);
-
-
-%% Remove autocorrelation from data
-% disp('Removing autocorrelation from data...');
-
-all_data = RemoveAutocorrelation(all_data, map);
+[all_data, map] = LoadData(PATH_TO_4D_DATA, PATH_TO_MAP);
 
 
 %% Parameters
 
 WINDOW = 198;
 STEP = 100;
-NOT_IN_REG_COUNT = round(0.2*((1000-WINDOW)/STEP+1)); % срого меньше  not_in_reg_count
+NOT_IN_REG_COUNT = 0.2;
 MIN_REG_SIZE = 10;
+
+
+%% Remove autocorrelation from data
+% disp('Removing autocorrelation from data...');
+
+all_data = RemoveAutocorrelation(all_data, map);
 
 
 %% Functions

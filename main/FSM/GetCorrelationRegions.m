@@ -2,12 +2,16 @@
 %% Load_data
 % disp('Loading data and parameters...');
 
-addpath('source');
-
-PATH_TO_4D_NII = 'path\to\4d\data.nii';
+PATH_TO_4D_DATA = 'path\to\4d\data.nii';
 PATH_TO_MASK = 'path\to\mask.nii';
 
-[all_data, mask] = LoadData(PATH_TO_4D_NII, PATH_TO_MASK);
+[all_data, mask] = LoadData(PATH_TO_4D_DATA, PATH_TO_MASK);
+
+
+%% Parameters 
+
+MIN_REG_SIZE = 10;
+CORR_CUTOFF = 0.85;
 
 
 %% Remove autocorrelation from data
@@ -15,11 +19,6 @@ PATH_TO_MASK = 'path\to\mask.nii';
 
 all_data = RemoveAutocorrelation(all_data, mask);
 
-
-%% Parameters 
-
-MIN_REG_SIZE = 10;
-CORR_CUTOFF = 0.85; % Cutoff
 
 %% Functions
 % disp('Finding new regions...'); 

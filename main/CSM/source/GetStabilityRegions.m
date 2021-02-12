@@ -1,5 +1,7 @@
 function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT)
     
+    NOT_IN_REG_COUNT = round(NOT_IN_REG_COUNT*floor((size(all_data{1,1},1)-WINDOW)/STEP+1));
+    
     idx_reg = cell(1, max(map(:)));
     
     for q=1:max(map(:)) %размеры всех регионов. 
@@ -7,7 +9,7 @@ function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_CO
     end
 
     k=1;
-    for i=1:STEP:1001-WINDOW
+    for i=1:STEP:size(all_data{1,1},1)+1-WINDOW
         for j=1:size(all_data,2)
             all_data_windowed{k}{j} = detrend(all_data{j}(i:i+WINDOW-1 ,:));
         end
@@ -22,7 +24,7 @@ function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_CO
 
         clear idx
         k=1;
-        for i=1:STEP:1001-WINDOW
+        for i=1:STEP:size(all_data{1,1},1)+1-WINDOW
             disp(['i=' num2str(i)]);
             idx(:, k) = clustering_by_kmeans(get_data(all_data_windowed{k}, neig), opt, 100);
             k=k+1;
@@ -38,7 +40,7 @@ function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_CO
     %             if (all(idx(j, :)==idx(i,:))) %если полностью совпадает
     %                 idx_sum(j)=t;
     %             end
-                if (sum(idx(j, :)~=idx(i,:))<NOT_IN_REG_COUNT) %если не полностью
+                if (sum(idx(j, :)~=idx(i,:))<=NOT_IN_REG_COUNT) %если не полностью
                     idx_sum(j)=t;
                 end
             end
