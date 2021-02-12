@@ -1,4 +1,4 @@
-function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT)
+function idx_reg = GetRegionsInMap(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT)
     
     NOT_IN_REG_COUNT = round(NOT_IN_REG_COUNT*floor((size(all_data{1,1},1)-WINDOW)/STEP+1));
     
@@ -20,12 +20,12 @@ function newMap = GetStabilityRegions(all_data, map, WINDOW, STEP, NOT_IN_REG_CO
     for q=1:max(map(:))    
         neig = find_neighbors(map, q);
         opt = round(size(neig,2)/1.5);
-        disp(['q=' num2str(q) ', opt=' num2str(opt)]);
+        disp(['Region in work=' num2str(q) ', optimal=' num2str(opt)]);
 
         clear idx
         k=1;
         for i=1:STEP:size(all_data{1,1},1)+1-WINDOW
-            disp(['i=' num2str(i)]);
+%             disp(['i=' num2str(i)]);
             idx(:, k) = clustering_by_kmeans(get_data(all_data_windowed{k}, neig), opt, 100);
             k=k+1;
         end
