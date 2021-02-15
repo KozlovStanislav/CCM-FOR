@@ -1,12 +1,13 @@
-function newData = RemoveAutocorrelation(data, greymask)
-    newData = cell(size(greymask));
-    coords = find(greymask~=0);
-    [x,y,z] = ind2sub(size(greymask),coords);
-    for i=1:size(coords,1)
-        q = detrend(double(data{x(i),y(i),z(i)}));
-        acf = ar(q,2);
-        newData{x(i),y(i),z(i)} = q(3:end)+...
-            acf.Report.Parameters.ParVector(1)*q(2:end-1)+...
-            acf.Report.Parameters.ParVector(2)*q(1:end-2);
+function newData = RemoveAutocorrelation(data)
+% Удаляем автокорреляцию
+    newData = cell(size(data));
+    for i=1:size(data,2)
+        for j=1:size(data{i},2)
+            q = detrend(double(data{i}(:,j)));
+            acf = ar(q,2);
+            newData{i}(:,j) = q(3:end)+...
+                acf.Report.Parameters.ParVector(1)*q(2:end-1)+...
+                acf.Report.Parameters.ParVector(2)*q(1:end-2);
+        end
     end
 end

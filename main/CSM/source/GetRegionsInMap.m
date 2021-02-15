@@ -1,15 +1,22 @@
 function idx_reg = GetRegionsInMap(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT)
-    
+% –асчЄт стабильных €дер по методу к-средних прогоном дл€ каждого
+% анатомического региона. ¬ каждом прогоне дл€ поиска стабильных областей в
+% данном регионе используютс€ все соседние регионы. –езультат - переменна€,
+% котора€ дл€ каждого исходного региона предоставл€ет новую нумерацию -
+% стабильные области внутри исходного региона. 
+
+    % ѕересчитываем количество временных окон (от процента)
     NOT_IN_REG_COUNT = round(NOT_IN_REG_COUNT*floor((size(all_data{1,1},1)-WINDOW)/STEP+1));
     
+    % –езультирующа€ переменна€
     idx_reg = cell(1, max(map(:)));
     
-    for q=1:max(map(:)) %размеры всех регионов. 
+    for q=1:max(map(:)) % «апишем размеры всех регионов. 
         reg_size(q) = size(find(map==q), 1);
     end
 
     k=1;
-    for i=1:STEP:size(all_data{1,1},1)+1-WINDOW
+    for i=1:STEP:size(all_data{1,1},1)+1-WINDOW %–азобьЄм исходные данные на временные окна
         for j=1:size(all_data,2)
             all_data_windowed{k}{j} = detrend(all_data{j}(i:i+WINDOW-1 ,:));
         end
@@ -17,35 +24,35 @@ function idx_reg = GetRegionsInMap(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT
     end
     
     
-    for q=1:max(map(:))    
-        neig = find_neighbors(map, q);
-        opt = round(size(neig,2)/1.5);
+    for q=1:max(map(:)) % ќсновной цикл по всем исходным регионам
+        neig = find_neighbors(map, q); % ѕоиск соседних регионов
+        opt = round(size(neig,2)/1.5); % "јдаптивное" K дл€ метода k-средних
+        
         disp(['Region in work=' num2str(q) ', optimal=' num2str(opt)]);
 
         clear idx
-        k=1;
-        for i=1:STEP:size(all_data{1,1},1)+1-WINDOW
-%             disp(['i=' num2str(i)]);
-            idx(:, k) = clustering_by_kmeans(get_data(all_data_windowed{k}, neig), opt, 100);
-            k=k+1;
+        for i=1:size(all_data_windowed,2) % ¬ызов основной функции просчЄта ‘ќ– в разных временных окнах
+%             disp(['i=' num2str(i) '/' num2str(size(all_data_windowed,2))]);
+            idx(:, i) = clustering_by_kmeans(get_data(all_data_windowed{i}, neig), opt, 100);
         end
 
-        t=1;
-        idx_sum = zeros(size(idx,1),1);
+        t=1; % ÷икл дл€ поиска одинаковых р€дов (вокселей, определ€емых в один регион каждый раз)
+        idx_sum = zeros(size(idx,1),1); % Ќова€ переменна€ - принадлежность к новому региону
         for i = 1:size(idx,1) 
             if (idx_sum(i)~=0) 
-                continue;
+                continue; % ≈сли р€д этого воксел€ уже кому-то был кому-то равен - пропустить
             end
-            for j = i:size(idx,1)
+            for j = i:size(idx,1) % —равнение р€дов, начина€ с текущего
     %             if (all(idx(j, :)==idx(i,:))) %если полностью совпадает
-    %                 idx_sum(j)=t;
+    %                 idx_sum(j)=t; % ѕрисваиваем новое число - номер региона
     %             end
-                if (sum(idx(j, :)~=idx(i,:))<=NOT_IN_REG_COUNT) %если не полностью
-                    idx_sum(j)=t;
+                if (sum(idx(j, :)~=idx(i,:))<=NOT_IN_REG_COUNT) %если не полностью совпадает
+                    idx_sum(j)=t; % ѕрисваиваем новое число - номер региона
                 end
             end
             t = t+1;
         end
+        % ќбща€ дл€ всех исходных регионов переменна€ (+ ограничение, чтобы сохран€лс€ только исследуемый регион)
         idx_reg{1, q} = idx_sum(1:reg_size(q));
     end
 end

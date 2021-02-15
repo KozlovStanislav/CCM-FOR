@@ -1,13 +1,14 @@
 function [all_data, map] = LoadData(PATH_TO_4D_NII, PATH_TO_MASK)
-    
+% Подгрузка данных в "удобный" для обработки формат 
     nii=load_nii(PATH_TO_4D_NII); 
     nii=nii.img;
 
     map=load_nii(PATH_TO_MASK);
     map=round(map.img);
 
-    % Reform the data from 4D double to region cells with dynamics
+    % Reform the data from 4D double to cells for each region with dynamics
     all_data = cell(1,max(map(:)));
+    
     for i=1:max(map(:)) 
         coords{i} = find(map==i);
         all_data{i} = zeros(1000, size(coords{i},1));

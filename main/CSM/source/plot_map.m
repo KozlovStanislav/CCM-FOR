@@ -1,4 +1,6 @@
 function plot_map( map, reg )
+% Функция для отображения карты в 3д. 
+% Второй параметр - отобразить только выбранные регионы.
     if (nargin==1)
         [x,y,z] = ind2sub(size(map),find(map ~= 0));
         figure

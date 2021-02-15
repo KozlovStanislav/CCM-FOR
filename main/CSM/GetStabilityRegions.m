@@ -26,7 +26,7 @@ all_data = RemoveAutocorrelation(all_data, map);
 % disp('Finding new regions...'); 
 
 regs_in_map = GetRegionsInMap(all_data, map, WINDOW, STEP, NOT_IN_REG_COUNT);
-newMap = TakeCores(regs_in_map, map);
+newMap = TakeCores(regs_in_map, map, MIN_REG_SIZE);
 
 %% Plot result
 % disp('Complete, plotting result');
