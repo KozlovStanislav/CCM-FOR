@@ -19,7 +19,7 @@ MIN_REG_SIZE = 10;
 %% Remove autocorrelation from data
 % disp('Removing autocorrelation from data...');
 
-all_data = RemoveAutocorrelation(all_data, map);
+all_data = RemoveAutocorrelation(all_data);
 
 
 %% Functions
