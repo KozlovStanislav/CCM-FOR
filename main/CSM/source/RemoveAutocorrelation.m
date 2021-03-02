@@ -1,5 +1,5 @@
 function newData = RemoveAutocorrelation(data)
-% Удаляем автокорреляцию
+% Autocorrelation remove from data
     newData = cell(size(data));
     for i=1:size(data,2)
         for j=1:size(data{i},2)
