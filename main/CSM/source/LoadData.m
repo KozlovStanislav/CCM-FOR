@@ -1,5 +1,5 @@
 function [all_data, map] = LoadData(PATH_TO_4D_NII, PATH_TO_MASK)
-% Подгрузка данных в "удобный" для обработки формат 
+% Load data into a comfortable format  
     nii=load_nii(PATH_TO_4D_NII); 
     nii=nii.img;
 

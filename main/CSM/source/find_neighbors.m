@@ -1,6 +1,6 @@
 function res = find_neighbors( map, reg )
-% Поиск всех соседних регионов на карте повоксельно для заданного региона
-% Полный перебор по вокселям региона: проверка всех вокселей вокруг
+% Find all neighboring regions for given region "reg"
+% Full iteration over the region's voxels: checking all voxels around
     k=2;  res(1)=reg;
     for i=find(map==reg)'
         [x,y,z] = ind2sub(size(map),i);

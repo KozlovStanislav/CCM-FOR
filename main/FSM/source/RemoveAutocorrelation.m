@@ -1,5 +1,5 @@
 function newData = RemoveAutocorrelation(data, greymask)
-% Autocorrelation remove from data
+% Remove autocorrelation from data
     newData = cell(size(greymask));
     coords = find(greymask~=0);
     [x,y,z] = ind2sub(size(greymask),coords);
